@@ -28,7 +28,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class AdminExtension
  */
-class LchListExtension extends \Twig_Extension
+class LchListExtension extends Extension
 {
 
     private static $mandatoryOptions = [
@@ -169,7 +169,8 @@ class LchListExtension extends \Twig_Extension
         $listEvent = new RenderListEvent($records, $options, $this->tokenStorage->getToken());
         // Dispatch render list event
         $this->dispatcher->dispatch(
-            LchComponentsEvents::RENDER_LIST_PREFIX . $options['entity']['name'], $listEvent
+            $listEvent,
+            LchComponentsEvents::RENDER_LIST_PREFIX . $options['entity']['name']
         );
         // Bring back options as array not updated by reference
         $options = $listEvent->getOptions();
@@ -193,7 +194,8 @@ class LchListExtension extends \Twig_Extension
         $headerEvent = new RenderListHeaderEvent($records, $options);
         // Dispatch render list event
         $this->dispatcher->dispatch(
-            LchComponentsEvents::RENDER_HEADER_PREFIX . $options['entity']['name'], $headerEvent
+            $headerEvent,
+            LchComponentsEvents::RENDER_HEADER_PREFIX . $options['entity']['name']
         );
         // Bring back options as array not updated by reference
         $options = $headerEvent->getOptions();
@@ -212,7 +214,8 @@ class LchListExtension extends \Twig_Extension
         $rowEvent = new RenderListRowEvent($record, $options);
         // Dispatch render list row event
         $this->dispatcher->dispatch(
-            LchComponentsEvents::RENDER_ROW_PREFIX . $options['entity']['name'], $rowEvent
+            $rowEvent,
+            LchComponentsEvents::RENDER_ROW_PREFIX . $options['entity']['name']
         );
         // Bring back options as array not updated by reference
         $options = $rowEvent->getOptions();
@@ -230,7 +233,7 @@ class LchListExtension extends \Twig_Extension
      */
     public function renderCell($record, $field, $fieldConfiguration, array $options) {
 
-        
+
         // Classic fields
         // TODO remove ugly hard-coded fields names
         if($field != 'stateFields') {
@@ -248,9 +251,10 @@ class LchListExtension extends \Twig_Extension
             $cellEvent = new RenderListRowCellEvent($record, $field, $fieldConfiguration, $cellValue, $options);
             // Dispatch render list row cell event
             $this->dispatcher->dispatch(
-                LchComponentsEvents::RENDER_CELL_PREFIX . $options['entity']['name'], $cellEvent
+                $cellEvent,
+                LchComponentsEvents::RENDER_CELL_PREFIX . $options['entity']['name']
             );
-            
+
             return $this->twig->render("LchComponentsBundle:List:cell.html.twig", [
                     'field' => $field,
                     'value' => $cellEvent->getValue(),
@@ -270,7 +274,8 @@ class LchListExtension extends \Twig_Extension
                 $stateEvent = new RenderListRowStateEvent($record, $field, $fieldConfiguration, $options);
                 // Dispatch render list row cell event
                 $this->dispatcher->dispatch(
-                    LchComponentsEvents::RENDER_ROW_STATE_PREFIX . $options['entity']['name'], $stateEvent
+                    $stateEvent,
+                    LchComponentsEvents::RENDER_ROW_STATE_PREFIX . $options['entity']['name']
                 );
 
                 // TODO set constants for all fields names. Find a cool way to use Twig with
@@ -306,7 +311,8 @@ class LchListExtension extends \Twig_Extension
         // Dispatch render list row cell event
         $actionEvent = new RenderListRowActionsEvent($record, $options, $this->tokenStorage->getToken());
         $this->dispatcher->dispatch(
-            LchComponentsEvents::RENDER_ACTIONS_PREFIX . $options['entity']['name'], $actionEvent
+            $actionEvent,
+            LchComponentsEvents::RENDER_ACTIONS_PREFIX . $options['entity']['name']
         );
         // Bring back options as array not updated by reference
         $options = $actionEvent->getOptions();
@@ -324,7 +330,8 @@ class LchListExtension extends \Twig_Extension
         $beforeListEvent = new RenderListEventBefore($records, $options);
         // Dispatch render list event
         $this->dispatcher->dispatch(
-            LchComponentsEvents::RENDER_LIST_BEFORE_PREFIX . $options['entity']['name'], $beforeListEvent
+            $beforeListEvent,
+            LchComponentsEvents::RENDER_LIST_BEFORE_PREFIX . $options['entity']['name']
         );
         // Bring back options as array not updated by reference
         $options = $beforeListEvent->getOptions();
@@ -342,7 +349,8 @@ class LchListExtension extends \Twig_Extension
         $preHeaderEvent = new RenderPreHeaderEvent($records, $options);
         // Dispatch specific render list event
         $this->dispatcher->dispatch(
-            LchComponentsEvents::RENDER_PRE_HEADER_PREFIX . $options['entity']['name'], $preHeaderEvent
+            $preHeaderEvent,
+            LchComponentsEvents::RENDER_PRE_HEADER_PREFIX . $options['entity']['name']
         );
         // Bring back options as array not updated by reference
         $options = $preHeaderEvent->getOptions();
@@ -360,7 +368,8 @@ class LchListExtension extends \Twig_Extension
         $afterListEvent = new RenderListEventAfter($records, $options);
         // Dispatch render list event
         $this->dispatcher->dispatch(
-            LchComponentsEvents::RENDER_LIST_AFTER_PREFIX . $options['entity']['name'], $afterListEvent
+            $afterListEvent,
+            LchComponentsEvents::RENDER_LIST_AFTER_PREFIX . $options['entity']['name']
         );
         // Bring back options as array not updated by reference
         $options = $afterListEvent->getOptions();
@@ -397,7 +406,8 @@ class LchListExtension extends \Twig_Extension
         $cellEvent = new RenderListRowCellEvent($record, $field, $fieldConfiguration, $cellValue, $options);
         // Dispatch render list row cell event
         $this->dispatcher->dispatch(
-            LchComponentsEvents::RENDER_CELL_PREFIX . $options['entity']['name'], $cellEvent
+            $cellEvent,
+            LchComponentsEvents::RENDER_CELL_PREFIX . $options['entity']['name']
         );
 
         return $cellEvent;
