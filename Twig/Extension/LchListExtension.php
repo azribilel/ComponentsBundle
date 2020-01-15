@@ -24,11 +24,13 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Class AdminExtension
  */
-class LchListExtension extends Extension
+class LchListExtension extends AbstractExtension
 {
 
     private static $mandatoryOptions = [
@@ -97,42 +99,42 @@ class LchListExtension extends Extension
     {
         // TODO add function.filter to check entity class (eq. to instanceof)
         return array(
-            'renderPreHeader' => new \Twig_SimpleFunction(
+            'renderPreHeader' => new TwigFunction(
                 'renderPreHeader',
                 array($this, 'renderPreHeader'),
                 array('is_safe' => array('html'))
             ),
-            'renderList' => new \Twig_SimpleFunction(
+            'renderList' => new TwigFunction(
                 'renderList',
                 array($this, 'renderList'),
                 array('is_safe' => array('html'))
             ),
-            'renderHeader' => new \Twig_SimpleFunction(
+            'renderHeader' => new TwigFunction(
                 'renderHeader',
                 array($this, 'renderHeader'),
                 array('is_safe' => array('html'))
             ),
-            'renderRow' => new \Twig_SimpleFunction(
+            'renderRow' => new TwigFunction(
                 'renderRow',
                 array($this, 'renderRow'),
                 array('is_safe' => array('html'))
             ),
-            'renderCell' => new \Twig_SimpleFunction(
+            'renderCell' => new TwigFunction(
                 'renderCell',
                 array($this, 'renderCell'),
                 array('is_safe' => array('html'))
             ),
-            'renderActions' => new \Twig_SimpleFunction(
+            'renderActions' => new TwigFunction(
                 'renderActions',
                 array($this, 'renderActions'),
                 array('is_safe' => array('html'))
             ),
-            'renderBeforeList' => new \Twig_SimpleFunction(
+            'renderBeforeList' => new TwigFunction(
                 'renderBeforeList',
                 array($this, 'renderBeforeList'),
                 array('is_safe' => array('html'))
             ),
-            'renderAfterList' => new \Twig_SimpleFunction(
+            'renderAfterList' => new TwigFunction(
                 'renderAfterList',
                 array($this, 'renderAfterList'),
                 array('is_safe' => array('html'))

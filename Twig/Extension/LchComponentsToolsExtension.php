@@ -9,12 +9,15 @@
 namespace Lch\ComponentsBundle\Twig\Extension;
 
 
-class LchComponentsToolsExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class LchComponentsToolsExtension extends AbstractExtension
 {
     public function getFunctions()
     {
         return array(
-            'class' => new \Twig_SimpleFunction('getClass', array($this, 'getClass'))
+            'class' => new TwigFunction('getClass', array($this, 'getClass'))
         );
     }
 
